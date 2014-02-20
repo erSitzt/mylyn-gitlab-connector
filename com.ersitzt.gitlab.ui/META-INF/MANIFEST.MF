@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: GitLab Connector Ui
+Bundle-SymbolicName: com.ersitzt.gitlab.ui;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.ersitzt.gitlab.ui.GitLabUiPlugin
+Bundle-Vendor: ersitzt.com
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui;bundle-version="3.105.0",
+ org.eclipse.ui.forms;bundle-version="3.6.1",
+ com.ersitzt.gitlab.core;bundle-version="1.0.0",
+ org.eclipse.mylyn.commons.core;bundle-version="[3.10.0,4.0.0)",
+ org.eclipse.mylyn.commons.ui;bundle-version="[3.10.0,4.0.0)",
+ org.eclipse.mylyn.tasks.ui;bundle-version="[3.10.0,4.0.0)",
+ org.eclipse.mylyn.tasks.core;bundle-version="[3.10.0,4.0.0)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.mylyn.tasks.core

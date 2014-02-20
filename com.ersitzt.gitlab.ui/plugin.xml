@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.mylyn.tasks.ui.repositories">
+      <connectorCore
+            class="com.ersitzt.gitlab.core.GitLabRepositoryConnector"
+            id="GitLab"
+            name="GitLab Connector Core">
+      </connectorCore>
+      <connectorUi
+            brandingIcon="icons/trac-icon.gif"
+            class="com.ersitzt.gitlab.ui.GitLabConnectorUi"
+            id="GitLab"
+            name="GitLab Connector Ui"
+            overlayIcon="icons/overlay-trac.gif">
+      </connectorUi>
+   </extension>
+   <extension
+         point="org.eclipse.mylyn.tasks.core.templates">
+      <repository
+            label="GitLab Example"
+            repositoryKind="gitlab"
+            urlRepository="http://srv-git.zentrale.expert.de/repo">
+      </repository>
+   </extension>
+   <extension
+         point="org.eclipse.mylyn.tasks.ui.editors">
+      <pageFactory
+            class="com.ersitzt.gitlab.ui.editor.GitLabTaskEditorPageFactory"
+            id="com.ersitzt.gitlab.ui.pageFactory">
+      </pageFactory>
+   </extension>
+
+</plugin>
