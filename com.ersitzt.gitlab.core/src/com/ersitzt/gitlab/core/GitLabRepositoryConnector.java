@@ -1,8 +1,13 @@
 package com.ersitzt.gitlab.core;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.mylyn.tasks.core.AbstractRepositoryConnector;
@@ -13,7 +18,22 @@ import org.eclipse.mylyn.tasks.core.data.TaskData;
 import org.eclipse.mylyn.tasks.core.data.TaskDataCollector;
 import org.eclipse.mylyn.tasks.core.sync.ISynchronizationSession;
 
+import com.ersitzt.gitlab.core.models.GitLabComment;
+import com.ersitzt.gitlab.core.models.GitLabIssue;
+import com.ersitzt.gitlab.core.models.GitLabIssues;
+
 public class GitLabRepositoryConnector extends AbstractRepositoryConnector {
+    /** Bitbucket kind. */
+    protected static final String KIND = GitLab.CONNECTOR_KIND;
+    /** Bitbucket specific {@link AbstractTaskDataHandler}. */
+    private final GitLabTaskDataHandler taskDataHandler;
+
+    /**
+     * Constructor for BitbucketRepositoryConnector.
+     */
+    public GitLabRepositoryConnector() {
+        this.taskDataHandler = new GitLabTaskDataHandler();
+    }
 
 	@Override
 	public boolean canCreateNewTask(@NonNull TaskRepository repository) {
@@ -86,23 +106,51 @@ public class GitLabRepositoryConnector extends AbstractRepositoryConnector {
 			@NonNull TaskDataCollector collector,
 			@Nullable ISynchronizationSession session,
 			@NonNull IProgressMonitor monitor) {
-		// TODO Auto-generated method stub
-		return null;
+		monitor.beginTask("Querying repository ...", 1);
+		try {
+			GitLabIssues issues = GitLabService.get(repository).searchIssues(
+					GitLabQuery.get(query));
+			// collect task data
+			for (GitLabIssue issue : issues.getIssues()) {
+				addCommentsToIssue(repository, issue);
+				TaskData taskData = taskDataHandler.toTaskData(repository,
+						issue);
+				collector.accept(taskData);
+			}
+			return Status.OK_STATUS;
+		} catch (GitLabServiceException e) {
+			return GitLabStatus.newErrorStatus(e);
+		} finally {
+			monitor.done();
+		}
 	}
+    public void addCommentsToIssue(TaskRepository repository,GitLabIssue issue) throws GitLabServiceException {        
+        List<GitLabComment> comments = GitLabService.get(repository).doGetList(new GitLabComment(issue));
+        for (GitLabComment comment : comments) {
+            comment.setIssue(issue);
+        }
+        Collections.sort(comments,new Comparator<GitLabComment>() {
+            @Override
+            public int compare(GitLabComment o1, GitLabComment o2) {
+                return o1.getUtcCreatedOn().compareTo(o2.getUtcCreatedOn());
+            }
+        });
+        //issue.setComments(comments.toArray(new GitLabComment[comments.size()]));
+    }
 
 	@Override
 	public void updateRepositoryConfiguration(
 			@NonNull TaskRepository taskRepository,
 			@NonNull IProgressMonitor monitor) throws CoreException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void updateTaskFromTaskData(@NonNull TaskRepository taskRepository,
 			@NonNull ITask task, @NonNull TaskData taskData) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
