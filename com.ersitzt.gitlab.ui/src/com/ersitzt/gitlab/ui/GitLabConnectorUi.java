@@ -6,6 +6,7 @@ import org.eclipse.mylyn.tasks.core.ITaskMapping;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.ui.AbstractRepositoryConnectorUi;
 import org.eclipse.mylyn.tasks.ui.wizards.ITaskRepositoryPage;
+import org.eclipse.mylyn.tasks.ui.wizards.NewTaskWizard;
 
 import com.ersitzt.gitlab.core.GitLabCorePlugin;
 import com.ersitzt.gitlab.ui.wizard.GitLabRepositorySettingsPage;
@@ -39,7 +40,7 @@ public class GitLabConnectorUi extends AbstractRepositoryConnectorUi {
 	public IWizard getNewTaskWizard(TaskRepository repository,
 			ITaskMapping selection) {
 		// TODO Auto-generated method stub
-		return null;
+		return new NewTaskWizard(repository, selection);
 	}
 
 	@Override

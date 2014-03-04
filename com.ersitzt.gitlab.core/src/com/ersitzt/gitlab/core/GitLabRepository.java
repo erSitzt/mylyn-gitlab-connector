@@ -1,5 +1,6 @@
 package com.ersitzt.gitlab.core;
 
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,6 +13,8 @@ public class GitLabRepository {
         + "([^/]+)/([^/]+)/issues/([^/]+)/?");
 	private String repourl;
 	private String apitoken;
+	
+	private final AtomicReference<Configuration> configuration = new AtomicReference<GitLabRepository.Configuration>();
 	
 
 	public GitLabRepository(String repourl, String apitoken) {
@@ -66,5 +69,28 @@ public class GitLabRepository {
 		return new GitLabRepository(url, apikey);
 
 	}
+    // Required by the plugin?
+    public Configuration getConfiguration() {
+        return getConfiguration(false);
+    }
+
+    public Configuration getConfiguration(boolean forceLoad) {
+        synchronized (this.configuration) {
+            Configuration conf = configuration.get();
+            if (conf == null || forceLoad) {
+                conf = loadConfiguration();
+                configuration.set(conf);
+            }
+            return conf;
+        }
+    }
+
+    private Configuration loadConfiguration() {
+        Configuration conf = new Configuration();
+        return conf;
+    }
+    
+    public static class Configuration {
+    }
 
 }

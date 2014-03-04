@@ -23,9 +23,9 @@ import com.ersitzt.gitlab.core.models.GitLabIssue;
 import com.ersitzt.gitlab.core.models.GitLabIssues;
 
 public class GitLabRepositoryConnector extends AbstractRepositoryConnector {
-    /** Bitbucket kind. */
+    /** GitLab kind. */
     protected static final String KIND = GitLab.CONNECTOR_KIND;
-    /** Bitbucket specific {@link AbstractTaskDataHandler}. */
+    /** GitLab specific {@link AbstractTaskDataHandler}. */
     private final GitLabTaskDataHandler taskDataHandler;
 
     /**
@@ -38,7 +38,7 @@ public class GitLabRepositoryConnector extends AbstractRepositoryConnector {
 	@Override
 	public boolean canCreateNewTask(@NonNull TaskRepository repository) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
