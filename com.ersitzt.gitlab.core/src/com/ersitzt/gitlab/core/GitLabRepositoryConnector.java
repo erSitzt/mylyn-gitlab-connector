@@ -18,7 +18,7 @@ import org.eclipse.mylyn.tasks.core.data.TaskData;
 import org.eclipse.mylyn.tasks.core.data.TaskDataCollector;
 import org.eclipse.mylyn.tasks.core.sync.ISynchronizationSession;
 
-import com.ersitzt.gitlab.core.models.GitLabComment;
+import com.ersitzt.gitlab.core.models.GitLabNote;
 import com.ersitzt.gitlab.core.models.GitLabIssue;
 import com.ersitzt.gitlab.core.models.GitLabIssues;
 
@@ -125,13 +125,13 @@ public class GitLabRepositoryConnector extends AbstractRepositoryConnector {
 		}
 	}
     public void addCommentsToIssue(TaskRepository repository,GitLabIssue issue) throws GitLabServiceException {        
-        List<GitLabComment> comments = GitLabService.get(repository).doGetList(new GitLabComment(issue));
-        for (GitLabComment comment : comments) {
+        List<GitLabNote> comments = GitLabService.get(repository).doGetList(new GitLabNote(issue));
+        for (GitLabNote comment : comments) {
             comment.setIssue(issue);
         }
-        Collections.sort(comments,new Comparator<GitLabComment>() {
+        Collections.sort(comments,new Comparator<GitLabNote>() {
             @Override
-            public int compare(GitLabComment o1, GitLabComment o2) {
+            public int compare(GitLabNote o1, GitLabNote o2) {
                 return o1.getUtcCreatedOn().compareTo(o2.getUtcCreatedOn());
             }
         });

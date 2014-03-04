@@ -61,9 +61,8 @@ public class GitLabIssues implements GitLabModelI {
 
 	@Override
 	public String buildUrl(GitLabRepository glr) {
-        return GitLabRepository.API_GITLAB + 
-                "issues" + "/";
-	}
+        return GitLabRepository.API_GITLAB + "/issues/";
+    }
 
 	@Override
 	public String getKey() {

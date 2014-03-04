@@ -9,7 +9,7 @@ import java.util.Map;
 import com.ersitzt.gitlab.core.GitLabRepository;
 import com.google.gson.reflect.TypeToken;
 
-public class GitLabComment implements GitLabModelI{
+public class GitLabNote implements GitLabModelI{
 
     private String content;
     private String commentId;
@@ -18,10 +18,10 @@ public class GitLabComment implements GitLabModelI{
     private GitLabUser authorInfo;
     private GitLabIssue issue;
 
-    public GitLabComment(GitLabIssue issue) {
+    public GitLabNote(GitLabIssue issue) {
         this.issue = issue;
     }
-    public GitLabComment(GitLabIssue issue,String content) {
+    public GitLabNote(GitLabIssue issue,String content) {
         this.content = content;
         this.issue = issue;
     }
@@ -57,8 +57,8 @@ public class GitLabComment implements GitLabModelI{
         return params;
     }
     @Override
-    public String buildUrl(GitLabRepository bbr) {
-        return GitLabRepository.API_GITLAB + "/issues/" + issue.getId() + "/comments/";
+    public String buildUrl(GitLabRepository glr) {
+        return GitLabRepository.API_GITLAB + "/projects/" + issue.getProjectId() + "/issues/" + issue.getId() + "/notes/";
     }
     @Override
     public String getKey() {
@@ -66,7 +66,7 @@ public class GitLabComment implements GitLabModelI{
     }
     @Override
     public Type getListType() {
-        return new TypeToken<List<GitLabComment>>(){}.getType();
+        return new TypeToken<List<GitLabNote>>(){}.getType();
     }
     public GitLabIssue getIssue() {
         return issue;

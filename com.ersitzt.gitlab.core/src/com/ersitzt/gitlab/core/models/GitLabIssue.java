@@ -22,8 +22,8 @@ public class GitLabIssue implements GitLabModelI {
 	private String description;
 	private String[] labels;
 	private String milestone;
-	private String assignee;
-	private GitLabAuthor author;
+	private GitLabUser assignee;
+	private GitLabUser author;
 	private String state;
 	private Date updatedAt;
 	private Date createdAt;
@@ -117,19 +117,19 @@ public class GitLabIssue implements GitLabModelI {
 		this.milestone = milestone;
 	}
 
-	public String getAssignee() {
+	public GitLabUser getAssignee() {
 		return assignee;
 	}
 
-	public void setAssignee(String assignee) {
+	public void setAssignee(GitLabUser assignee) {
 		this.assignee = assignee;
 	}
 
-	public GitLabAuthor getAuthor() {
+	public GitLabUser getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(GitLabAuthor author) {
+	public void setAuthor(GitLabUser author) {
 		this.author = author;
 	}
 
