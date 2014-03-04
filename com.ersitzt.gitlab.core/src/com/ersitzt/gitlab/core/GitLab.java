@@ -3,9 +3,9 @@ package com.ersitzt.gitlab.core;
 public class GitLab {
 
     /** bundle id of this plugin */
-    public static final String BUNDLE_ID = "org.eclipse.mylyn.bitbucket.core";
+    public static final String BUNDLE_ID = "com.ersitzt.gitlab.core";
     /** connector kind for Bitbucket */
-    public static final String CONNECTOR_KIND = "bitbucket";
+    public static final String CONNECTOR_KIND = "gitlab";
     /** Query key: status */
     public static final String QUERY_KEY_STATUS = "Status";
     /** Query key: kind */
